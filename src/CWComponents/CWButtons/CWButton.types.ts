@@ -7,6 +7,9 @@ export enum CWButtonVariant {
 
 export enum CWButtonSize {
   MEDIUM = "medium", // 48px (primary CTA)
+  SMALL = "small",
+  LARGE = "large"
+
 }
 
 export enum CWButtonState {

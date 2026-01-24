@@ -24,9 +24,22 @@ export const useColor = (token: CWColor) => {
       return theme.colors.primary_inverse;
     case "primary_background":
       return theme.colors.primary_background;
+    case "grey_100":
+      return theme.colors.grey_100;
+    case "grey_80":
+      return theme.colors.grey_80;
+    case "grey_100":
+      return theme.colors.grey_100;
+    case "grey_60":
+      return theme.colors.grey_60;
+    case "grey_40":
+      return theme.colors.grey_40;
+    case "grey_20":
+      return theme.colors.grey_20;
+
     case "heading":
       return theme.colors.heading
-       default:
+    default:
       return theme.colors.transparent;
   }
 };

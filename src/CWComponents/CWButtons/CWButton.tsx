@@ -99,7 +99,6 @@ export default function CWButton({
       );
     }
 
-    // 🔹 SECONDARY (Outline)
     if (kind === CWButtonKind.SECONDARY) {
       return (
         <View
