@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { IconKey } from '../CWUtilities/IconUtility';
-import { CWIcon } from './CWIcon';
-import { IconSize, IconColor } from './CWIcon.types';
+import { IconSize, IconColor } from './CWIcons/CWIcon.types';
 import { CWColor } from '../theme/CWColor.types';
+import { useColor } from '../theme/color';
+import { CWIcon } from './CWIcons/CWIcon';
 
 interface JBLottieComponentProps {
   imageUrl?: string;

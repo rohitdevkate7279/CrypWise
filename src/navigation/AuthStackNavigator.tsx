@@ -1,29 +1,26 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import CWLoginScreen from '../screens/CWLoginScreen';
+import CWLoginScreen from '../views/AuthOnboarding/CWLoginScreen';
 import CWIntroScreen from '../views/AuthOnboarding/CWIntroScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationStackData } from './CWNavGraph';
+import { AppScreens } from '../CWUtilities/CWConstants';
+import CWLoginOTPScreen from '../views/AuthOnboarding/CWLoginOTPScreen';
 
-export type AuthStackParamList = {
-  CWLogin: undefined;
-  CWSignUp: undefined;
-  CWSplashScreen: {prop:any}
-  CWIntroScreen: undefined
-};
-
-const AuthStack = createStackNavigator<AuthStackParamList>();
+const AuthStack = createNativeStackNavigator<NavigationStackData>();
 
 const CWAuthStackNavigator = () => {
   return (
     <AuthStack.Navigator
-      initialRouteName="CWLogin"
+      initialRouteName="CWIntroScreen"
       screenOptions={{
         headerShown: false,
         animation: 'slide_from_right',
       }}
     >
 
-      <AuthStack.Screen name="CWLogin" component={CWLoginScreen} />
-      <AuthStack.Screen name="CWIntroScreen" component={CWIntroScreen} />
+      <AuthStack.Screen name= {AppScreens.LOGIN_SCREEN} component={CWLoginScreen} />
+      <AuthStack.Screen name= {AppScreens.INTROSCREEN} component={CWIntroScreen} />
+      <AuthStack.Screen name = { AppScreens.LOGIN_OTP_SCREEN} component={CWLoginOTPScreen}/>
     </AuthStack.Navigator>
   );
 };

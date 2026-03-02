@@ -1,25 +1,26 @@
 import React, { useEffect } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import MainStackNavigator from './MainStackNavigator';
-import AuthStackNavigator from './AuthStackNavigator';
-import { RootStackParamList } from './types';
 import CWSplashScreen from '../views/AuthOnboarding/CWSPlashScree';
+import { NavigationStackData } from './CWNavGraph';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AppScreens } from '../CWUtilities/CWConstants';
+import CWAuthStackNavigator from './AuthStackNavigator';
+import CWMainStackNavigator from './MainStackNavigator';
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<NavigationStackData>();
 
-const RootNavigator = () => {
+const RootNavigator = ({deeplink}:{deeplink:string|null}) => {
     
   return (
     <Stack.Navigator
-      initialRouteName="CWSplashScreen"
+      initialRouteName={AppScreens.SPLASHSCREEN}
       screenOptions={{
         headerShown: false,
         animation: 'none',
       }}
     >
-      <Stack.Screen name="CWSplashScreen" component={CWSplashScreen} />
-      <Stack.Screen name="MainStack" component={MainStackNavigator} />
-      <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
+      <Stack.Screen name= {AppScreens.SPLASHSCREEN} component={CWSplashScreen} />
+      <Stack.Screen name={AppScreens.MAINSTACK} component={CWMainStackNavigator} />
+      <Stack.Screen name={AppScreens.AUTHSTACK} component={CWAuthStackNavigator} />
     </Stack.Navigator>
   );
 };

@@ -16,6 +16,11 @@ import CWButton from "../../CWComponents/CWButtons/CWButton";
 import { useColors } from "../../theme/CWCustomTokenProvider";
 import { CWTypography } from "../../CWComponents/CWText/CWTextType";
 import { CWButtonKind, CWButtonSize } from "../../CWComponents/CWButtons/CWButton.types";
+import CWToast from "../../CWComponents/CWToast/CWToast";
+import { Duration, SchematicState, ToastType } from "../../CWComponents/CWToast/CWToast.Types";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ActionType, navigateTo, NavigationStackData } from "../../navigation/CWNavGraph";
+import { AppScreens } from "../../CWUtilities/CWConstants";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -45,7 +50,9 @@ const DATA: IntroItem[] = [
     }
 ];
 
-const CWIntroScreen = () => {
+type Props = NativeStackScreenProps<NavigationStackData, AppScreens.INTROSCREEN>;
+const CWIntroScreen = ({ navigation, route }: Props) => {
+
     const theme = useColors();
     const [activeIndex, setActiveIndex] = useState(0);
     const listRef = useRef<FlatList>(null);
@@ -161,11 +168,20 @@ const CWIntroScreen = () => {
 
                 {/* BUTTONS */}
                 <View style={styles.buttons}>
-                    <CWButton title="Get Started" stretch size={CWButtonSize.MEDIUM} />
+                    <CWButton title="Get Started" stretch size={CWButtonSize.MEDIUM} 
+                    onPress={()=>{
+                        navigateTo({
+                            actionType: ActionType.OPEN_NATIVE,
+                            destination: AppScreens.LOGIN_SCREEN,
+                            params: {
+                            }
+                        }, navigation)
+                    }}/>
                     <CWButton
                         title="Explore"
                         stretch
                         kind={CWButtonKind.TERTIARY}
+                        
                     />
                 </View>
             </SafeAreaView>
@@ -233,6 +249,6 @@ const styles = StyleSheet.create({
     buttons: {
         gap: 12,
         paddingHorizontal: 24,
-        marginTop:8
+        marginTop: 8
     },
 });

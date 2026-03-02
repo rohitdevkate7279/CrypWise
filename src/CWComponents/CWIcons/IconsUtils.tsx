@@ -1,22 +1,4 @@
-import * as CoreIcons from "../CWAssets/asset";
-import React from "react";
-import { IconSize } from "../CWComponents/CWIcons/CWIcon.types";
-
-// const Icons = { ...CoreIcons, ...ExtendedIcons };
-const Icons = { ...CoreIcons };
-
-export type IconKey = keyof typeof Icons;
-
-export const IconUtility = {
-  getIconFromKey: (key: string, color: string, size: number) => {
-    const CurrentIcon = Icons[key as IconKey];
-    if (CurrentIcon) {
-      return <CurrentIcon color={color} size={size} />;
-    } else {
-      return <CoreIcons.IcCWDot color={color} size={size} />;
-    }
-  },
-};
+import { IconSize } from "./CWIcon.types";
 
 export const getIconSizeOnly = (size?: IconSize) => {
     switch (size) {

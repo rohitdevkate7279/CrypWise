@@ -1,5 +1,6 @@
 import { StyleProp, ViewStyle } from "react-native";
-import { IconKey } from "../CWUtilities/IconUtility";
+import { IconKey } from "../../CWUtilities/IconUtility";
+import { CWColor } from "../../theme/CWColor.types";
 
 export enum IconKind {
   DEFAULT = "default",
@@ -30,11 +31,13 @@ export enum IconColor {
 }
 export interface CWIconProps {
   ic: IconKey;
-  kind?: IconKind;
+  kind?: CustomIconKind;
   size?: IconSize;
-  color?: IconColor;
+  color?: CWColor;
+  backgroundColor?:CWColor;
   style?: StyleProp<ViewStyle>;
   isClickable?: boolean;
   onClick?: () => void;
-  
 }
+
+export type CustomIconKind = 'default'|'background'

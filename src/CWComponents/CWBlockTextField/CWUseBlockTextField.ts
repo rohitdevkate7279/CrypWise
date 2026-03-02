@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
-import { CWTextInputProps } from './CWtextInpuTypes';
+import { CWBlockInputProps } from './CWBlockTextFieldTypes';
 
-export const useTextInput = ({
+export const useBlockInput = ({
   onTextChange,
   onFilled,
   numberOfDigits = 6,
   disabled,
   autoFocus = true,
-}: CWTextInputProps) => {
+}: CWBlockInputProps) => {
   const [text, setText] = useState('');
   const [hasCursor, setHasCursor] = useState(autoFocus);
   const inputRef = useRef<TextInput>(null);

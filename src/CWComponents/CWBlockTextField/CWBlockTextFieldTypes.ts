@@ -1,7 +1,7 @@
 import { TextInputProps, TextStyle, ViewStyle } from 'react-native';
-import { FeedbackState } from './CWfeedback';
+import { FeedbackState } from '../../CWUtilities/Feedback';
 
-export interface CWTextInputProps {
+export interface CWBlockInputProps {
   numberOfDigits?: number;
   inputContainer?: ViewStyle;
   autoFocus?: boolean;
@@ -24,7 +24,7 @@ export interface CWTextInputProps {
   preventKeyboard?: boolean;
 }
 
-export interface CWTextInputRef {
+export interface CWBlockInputRef {
   clear: () => void;
   focus: () => void;
   setValue: (value: string) => void;

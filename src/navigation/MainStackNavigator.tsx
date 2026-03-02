@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import CWDummyScreen from '../CWDummyScreen';
-import CWHomeScreen from '../screens/CWHomeScreen';
-import CWProfileScreen from '../screens/CWProfileScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type MainStackParamList = {
   CWHome: undefined;
@@ -10,7 +8,7 @@ export type MainStackParamList = {
   CWDummyScreen: undefined;
 };
 
-const CWMainStack = createStackNavigator<MainStackParamList>();
+const CWMainStack = createNativeStackNavigator<MainStackParamList>();
 
 const CWMainStackNavigator = () => {
   useEffect(()=>{
@@ -25,8 +23,6 @@ const CWMainStackNavigator = () => {
         animation: 'slide_from_right',
       }}
     >
-      <CWMainStack.Screen name="CWHome" component={CWHomeScreen} />
-      <CWMainStack.Screen name="CWProfile" component={CWProfileScreen} />
       <CWMainStack.Screen name="CWDummyScreen" component={CWDummyScreen} />
     </CWMainStack.Navigator>
   );

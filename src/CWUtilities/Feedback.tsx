@@ -1,6 +1,10 @@
-import { View } from "react-native";
 import React from "react";
-import { IconColor } from "../CWIcon.types";
+import { View } from "react-native";
+import { IconColor, IconSize } from "../CWComponents/CWIcons/CWIcon.types";
+import { ColorToken } from "../theme/CWColor.types";
+import { CWIcon } from "../CWComponents/CWIcons/CWIcon";
+import CWText from "../CWComponents/CWText/CWText";
+import { CWTypography } from "../CWComponents/CWText/CWTextType";
 
 export interface FeedbackProps {
   state?: FeedbackState;
@@ -23,7 +27,7 @@ export enum FeedbackState {
 const Feedback = ({
   state,
   stateText,
-  feedbackSize = FeedbackSize.XS,
+  feedbackSize = FeedbackSize.S,
 }: FeedbackProps) => {
   function getIcon() {
     switch (state) {
@@ -49,7 +53,7 @@ const Feedback = ({
   function getStateTextColor() {
     switch (state) {
       case FeedbackState.ERROR:
-        return "feedback_error_80";
+        return "feedback_error_50";
       case FeedbackState.WARNING:
         return "feedback_warning_80";
       case FeedbackState.SUCCESS:
@@ -61,22 +65,22 @@ const Feedback = ({
   return (
     state !== FeedbackState.CLEAR && (
       <View style={{ flexDirection: "row", gap: 8, alignItems: "center" }}>
-        {/* <JioIcon
+        <CWIcon
           ic={getIcon()}
-          size={feedbackSize === FeedbackSize.S ? IconSize.MEDIUM : IconSize.SMALL}
+          size={feedbackSize === FeedbackSize.S ? IconSize.MEDIUM : IconSize.MEDIUM}
           color={getIconColor()}
-        ></JioIcon>
-        <JioText
+        ></CWIcon>
+        <CWText
           style={{ flex: 1 }}
           appearance={
             feedbackSize === FeedbackSize.S
-              ? JioTypography.BODY_S
-              : JioTypography.BODY_XS
+              ? CWTypography.BODY_L
+              : CWTypography.BODY_M
           }
           text={stateText}
           maxLines={5}
           color={getStateTextColor() as keyof ColorToken}
-        ></JioText> */}
+        ></CWText>
       </View>
     )
   );
