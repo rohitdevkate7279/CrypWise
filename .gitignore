@@ -19,6 +19,7 @@ xcuserdata
 DerivedData
 *.hmap
 *.ipa
+ios/Podfile.lock
 *.xcuserstate
 **/.xcode.env.local
 
@@ -40,7 +41,8 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
-
+package-lock.json
+yarn.lock
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
