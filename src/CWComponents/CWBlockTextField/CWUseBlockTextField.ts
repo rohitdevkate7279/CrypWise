@@ -25,7 +25,7 @@ export const useBlockInput = ({
 
   const handleTextChange = (value: string) => {    
     if (disabled) return;
-    value = value.replace(/[^0-9]/g, '');
+    value = value?.replace(/[^0-9]/g, '');
     setText(value);
     onTextChange?.(value);
     if (value.length === numberOfDigits) {
