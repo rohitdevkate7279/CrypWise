@@ -48,11 +48,10 @@ function App() {
           mode: isDarkMode ? "dark" : "dark",
         }}
       >
-            <GlobalStateProvider>
-        <NavigationContainer ref={navigationRef}
-        >
-          <RootNavigator deeplink={null}/>
-        </NavigationContainer>
+        <GlobalStateProvider>
+          <NavigationContainer ref={navigationRef}>
+            <RootNavigator deeplink={null} />
+          </NavigationContainer>
         </GlobalStateProvider>
       </CustomTokenProvider>
     </SafeAreaProvider>

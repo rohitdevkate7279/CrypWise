@@ -1,9 +1,8 @@
-import { StyleSheet, View } from "react-native";
-import { useColors } from "../../theme/CWCustomTokenProvider";
-import LottieView from "lottie-react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { AppScreens } from "../../CWUtilities/CWConstants";
-import { NavigationStackData } from "../../navigation/CWNavGraph";
+import LottieView from "lottie-react-native";
+import { View, StyleSheet } from "react-native";
+import { AppScreens } from "../../../CWUtilities/CWConstants";
+import { useColors } from "../../../theme/CWCustomTokenProvider";
 
 type Props = NativeStackScreenProps<any, AppScreens.SPLASHSCREEN>;
 

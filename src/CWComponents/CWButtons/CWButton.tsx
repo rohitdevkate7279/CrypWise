@@ -40,8 +40,8 @@ export default function CWButton({
   const height = CW_BUTTON_HEIGHT[size];
 
   const textColor =
-    kind === CWButtonKind.PRIMARY ? "primary_inverse" : "primary_60";
-
+    kind === CWButtonKind.PRIMARY ? "black" : "primary_80"
+    
   const content = (
     <View style={styles.content}>
       {state === CWButtonState.LOADING ? (
@@ -50,102 +50,123 @@ export default function CWButton({
         <CWText
           text={title}
           appearance={CWTypography.BODY_M_BOLD}
-          color="primary_inverse"
+          color={textColor}
         />
       )}
     </View>
   );
 
   const renderBackground = () => {
-    // 🔹 PRIMARY + GRADIENT
-    if (variant === CWButtonVariant.GRADIENT && kind === CWButtonKind.PRIMARY) {
-      return (
-        <View style={{ flex: 1 }}>
-          {/* Base Gradient */}
-          <LinearGradient
-            colors={CW_BUTTON_GRADIENT.colors}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={StyleSheet.absoluteFill}
-          />
-
-          {/* Glass highlight */}
-          <LinearGradient
-            colors={[
-              "rgba(255,255,255,0.35)",
-              "rgba(255,255,255,0.12)",
-              "rgba(255,255,255,0)",
-            ]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={StyleSheet.absoluteFill}
-          />
-
-          {/* Inner glass border */}
+    switch (kind) {
+      case CWButtonKind.CIRCLE:
+        return (
           <View
-            pointerEvents="none"
             style={[
-              StyleSheet.absoluteFill,
+              styles.circle,
               {
-                borderRadius: CW_BUTTON_RADIUS,
-                borderWidth: 1,
-                borderColor: "rgba(255,255,255,0.25)",
+                width: height,
+                height: height,
+                borderRadius: height / 2,
+                backgroundColor: CW_BUTTON_SOLID.primary,
               },
             ]}
-          />
-
-          {content}
-        </View>
-      );
+          >
+            {content}
+          </View>
+        );
+  
+      case CWButtonKind.SECONDARY:
+        return (
+          <View
+            style={[
+              styles.solid,
+              {
+                backgroundColor: CW_BUTTON_SOLID.secondary,
+                borderWidth: 1,
+                borderColor: CW_BUTTON_BORDER.secondary,
+              },
+            ]}
+          >
+            {content}
+          </View>
+        );
+  
+      case CWButtonKind.TERTIARY:
+        return <View style={styles.tertiary}>{content}</View>;
+  
+      case CWButtonKind.PRIMARY:
+        if (variant === CWButtonVariant.GRADIENT) {
+          return (
+            <View style={{ flex: 1 }}>
+              <LinearGradient
+                colors={CW_BUTTON_GRADIENT.colors}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={StyleSheet.absoluteFill}
+              />
+  
+              {/* Glass highlight */}
+              <LinearGradient
+                colors={[
+                  "rgba(255,255,255,0.35)",
+                  "rgba(255,255,255,0.12)",
+                  "rgba(255,255,255,0)",
+                ]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
+                style={StyleSheet.absoluteFill}
+              />
+  
+              {content}
+            </View>
+          );
+        }
+  
+        return (
+          <View
+            style={[
+              styles.solid,
+              { backgroundColor: CW_BUTTON_SOLID.primary },
+            ]}
+          >
+            {content}
+          </View>
+        );
+  
+      default:
+        return (
+          <View
+            style={[
+              styles.solid,
+              { backgroundColor: CW_BUTTON_SOLID.primary },
+            ]}
+          >
+            {content}
+          </View>
+        );
     }
-
-    if (kind === CWButtonKind.SECONDARY) {
-      return (
-        <View
-          style={[
-            styles.solid,
-            {
-              backgroundColor: CW_BUTTON_SOLID.secondary,
-              borderWidth: 1,
-              borderColor: CW_BUTTON_BORDER.secondary,
-            },
-          ]}
-        >
-          {content}
-        </View>
-      );
-    }
-
-    // 🔹 TERTIARY (Text only)
-    if (kind === CWButtonKind.TERTIARY) {
-      return <View style={styles.tertiary}>{content}</View>;
-    }
-
-    // 🔹 SOLID PRIMARY fallback
-    return (
-      <View
-        style={[
-          styles.solid,
-          { backgroundColor: CW_BUTTON_SOLID.primary },
-        ]}
-      >
-        {content}
-      </View>
-    );
   };
-
   return (
     <Pressable
       disabled={isDisabled}
       onPress={onPress}
       style={[
         styles.base,
-        { height, borderRadius: CW_BUTTON_RADIUS },
-        stretch && styles.stretch,
+        kind === CWButtonKind.CIRCLE
+          ? {
+              width: height,
+              height: height,
+              borderRadius: height / 2,
+              alignSelf: "center",
+            }
+          : {
+              height,
+              borderRadius: CW_BUTTON_RADIUS,
+            },
+        stretch && kind !== CWButtonKind.CIRCLE && styles.stretch,
         isDisabled && styles.disabled,
         style,
-      ]}
-    >
+      ]}    >
       {renderBackground()}
     </Pressable>
   );

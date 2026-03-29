@@ -118,6 +118,27 @@ function ScreenSlot(props: ScreenSlotProps) {
 
   let backHandler: NativeEventSubscription
 
+  
+      React.useEffect(() => {
+        navigation.setOptions({
+          gestureEnabled: props.disableBack ? false : true,      // 🔥 disable iOS swipe back
+          headerBackVisible: props.disableBack ? false : true,   // 🔥 hide header back button
+        });
+      }, [navigation]);
+
+      useFocusEffect(
+        React.useCallback(() => {
+          const onBackPress = () => props.disableBack ? true : false; // 🔥 block Android hardware back
+
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            onBackPress
+          );
+      
+          return () => backHandler.remove();
+        }, [])
+      );
+    
   const onBackPress = useCallback(() => {
     setToastTypeData(undefined);
     console.log(drawerRef.current, 'drawerRef')
@@ -376,6 +397,7 @@ function ScreenSlot(props: ScreenSlotProps) {
           />
         )}
         {
+          
           <View style={{ flex: 1, backgroundColor: useColors().primary_background, paddingTop: insets.top + 56, paddingHorizontal: 24, paddingBottom: 24 }}>
             {props?.children
               ? props.children(getLocalUserAuthStatus(userAuthenticationStatus), scrollY)

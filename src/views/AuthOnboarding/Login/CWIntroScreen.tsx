@@ -10,17 +10,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LinearGradient from "react-native-linear-gradient";
-
-import CWText from "../../CWComponents/CWText/CWText";
-import CWButton from "../../CWComponents/CWButtons/CWButton";
-import { useColors } from "../../theme/CWCustomTokenProvider";
-import { CWTypography } from "../../CWComponents/CWText/CWTextType";
-import { CWButtonKind, CWButtonSize } from "../../CWComponents/CWButtons/CWButton.types";
-import CWToast from "../../CWComponents/CWToast/CWToast";
-import { Duration, SchematicState, ToastType } from "../../CWComponents/CWToast/CWToast.Types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ActionType, navigateTo, NavigationStackData } from "../../navigation/CWNavGraph";
-import { AppScreens } from "../../CWUtilities/CWConstants";
+import CWButton from "../../../CWComponents/CWButtons/CWButton";
+import { CWButtonSize, CWButtonKind } from "../../../CWComponents/CWButtons/CWButton.types";
+import CWText from "../../../CWComponents/CWText/CWText";
+import { CWTypography } from "../../../CWComponents/CWText/CWTextType";
+import { AppScreens } from "../../../CWUtilities/CWConstants";
+import { NavigationStackData, navigateTo, ActionType } from "../../../navigation/CWNavGraph";
+import { useColors } from "../../../theme/CWCustomTokenProvider";
+
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -104,7 +102,7 @@ const CWIntroScreen = ({ navigation, route }: Props) => {
     return (
         <View style={[styles.root, { backgroundColor: theme.primary_background }]}>
             <Image
-                source={require("../../CWComponents/IntroScreenImage.png")}
+                source={require("../../../CWComponents/IntroScreenImage.png")}
                 resizeMode="cover"
                 style={styles.heroImage}
             />

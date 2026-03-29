@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import CWSplashScreen from '../views/AuthOnboarding/CWSPlashScree';
 import { NavigationStackData } from './CWNavGraph';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppScreens } from '../CWUtilities/CWConstants';
 import CWAuthStackNavigator from './AuthStackNavigator';
 import CWMainStackNavigator from './MainStackNavigator';
+import CWSplashScreen from '../views/AuthOnboarding/Login/CWSPlashScree';
 
 const Stack = createNativeStackNavigator<NavigationStackData>();
 

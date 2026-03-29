@@ -1,20 +1,18 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Animated, Keyboard, StyleSheet, View } from "react-native";
-
-import { AppScreens } from "../../CWUtilities/CWConstants";
-import ScreenSlot, { DeeplinkHandler } from "../../CWUtilities/CWScreenSlot";
-import { HeaderType } from "../../CWUtilities/CWScreenSlot.Types";
-import {
-  NavigationStackData,
-  navigationBeanObj,
-  ActionType,
-} from "../../navigation/CWNavGraph";
-
-import CWBlockTextField from "../../CWComponents/CWBlockTextField/CWBlockTextField";
-import CWText from "../../CWComponents/CWText/CWText";
-import { CWTypography } from "../../CWComponents/CWText/CWTextType";
-import CWButton from "../../CWComponents/CWButtons/CWButton";
+import { Animated, BackHandler, Keyboard, Pressable, StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import CWBlockTextField from "../../../CWComponents/CWBlockTextField/CWBlockTextField";
+import CWButton from "../../../CWComponents/CWButtons/CWButton";
+import CWText from "../../../CWComponents/CWText/CWText";
+import { CWTypography } from "../../../CWComponents/CWText/CWTextType";
+import { AppScreens } from "../../../CWUtilities/CWConstants";
+import ScreenSlot, { DeeplinkHandler } from "../../../CWUtilities/CWScreenSlot";
+import { HeaderType } from "../../../CWUtilities/CWScreenSlot.Types";
+import { NavigationStackData, navigationBeanObj, ActionType } from "../../../navigation/CWNavGraph";
+import useLoginOTPViewModel from "./useLoginOTPViewModel";
+import { checkBiometricAvailability } from "./Biometric/CWBiometric.service";
+import { CWButtonKind } from "../../../CWComponents/CWButtons/CWButton.types";
 
 type Props = NativeStackScreenProps<
   NavigationStackData,
@@ -23,21 +21,12 @@ type Props = NativeStackScreenProps<
 
 const CWLoginOTPScreen = ({ navigation }: Props) => {
 
-  const navigationBean = useMemo(
-    () =>
-      navigationBeanObj({
-        actionType: ActionType.OPEN_NATIVE,
-        destination: "",
-        actionUrl: "",
-        userAuthenticationRequired: 1,
-        headerVisibility: HeaderType.HIDDEN,
-      }),
-    []
-  );
-
-  const handleOtpFilled = useCallback((text: string) => {
-    Keyboard.dismiss();
-  }, []);
+  const {
+    navigationBean,
+    handleOtpFilled,
+    handleResendOTP,
+    handleContinue,
+  } = useLoginOTPViewModel(navigation)
 
   const renderContent = useCallback(
     (scrollY: Animated.Value) => {
@@ -75,19 +64,21 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
                 appearance={CWTypography.BODY_M_BOLD}
                 style={styles.didntGetOtp}
               />
+              <Pressable onPress={() => handleResendOTP()}>
+                <CWText
+                  text="Resend Code"
+                  textAlign="center"
+                  appearance={CWTypography.BODY_M_BOLD}
+                  color="primary_50"
+                  style={styles.resendText}
+                />
+              </Pressable>
 
-              <CWText
-                text="Resend Code"
-                textAlign="center"
-                appearance={CWTypography.BODY_M_BOLD}
-                color="primary_50"
-                style={styles.resendText}
-              />
             </View>
           </View>
 
           <View style={styles.buttonContainer}>
-            <CWButton title="Continue" />
+            <CWButton title="Continue" onPress={() =>handleContinue()}/>
           </View>
         </View>
       );
@@ -98,7 +89,7 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
   return (
     <DeeplinkHandler navigationBean={navigationBean} navigation={navigation}>
       {(bean) => (
-        <ScreenSlot navigationBean={bean} navigation={navigation} showBack>
+        <ScreenSlot navigationBean={bean} navigation={navigation} showBack >
           {(authState, scrollY) => renderContent(scrollY)}
         </ScreenSlot>
       )}
@@ -122,7 +113,7 @@ const styles = StyleSheet.create({
   otpInput: {
     flex: 1,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 120,
   },
   didntGetOtp: {
     marginTop: 24,

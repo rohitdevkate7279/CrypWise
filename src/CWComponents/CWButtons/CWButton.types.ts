@@ -30,8 +30,8 @@ export interface CWButtonProps {
 }
 
 export enum CWButtonKind {
-  PRIMARY = "primary",
-  SECONDARY = "secondary",
-  TERTIARY = "tertiary",
+  PRIMARY,
+  SECONDARY,
+  TERTIARY,
+  CIRCLE,
 }
-

@@ -20,7 +20,7 @@ function CWText({
   const textStyle = useMemo(() => useTypography(appearance), [appearance]);
   const textColor = useColor(color);
   const minHeight = minLines > 0 ? minLines * textStyle.lineHeight : undefined;
-  if (!text) return null;
+
   return (
     <Text
       style={[textStyle, { color: textColor, textAlign: textAlign,minHeight }, style]}
@@ -30,7 +30,7 @@ function CWText({
       onLayout={onLayout}
       textBreakStrategy={textBreakStrategy}
     >
-      {text}
+      {text ?? ""}
     </Text>
   );
 }

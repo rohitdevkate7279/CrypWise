@@ -57,8 +57,8 @@ const CWHeader = ({
         inputRange: [0, SCROLL_THRESHOLD],
         outputRange: [0, 1],
         extrapolate: 'clamp',
-      })
-      
+    })
+
     return (
         <>
             <Animated.View
@@ -69,16 +69,16 @@ const CWHeader = ({
                     },
                 ]}
             >
-              <Animated.View
-  pointerEvents="none"
-  style={[
-    StyleSheet.absoluteFillObject,
-    {
-      backgroundColor: colors.primary_40,
-      opacity: bgOpacity,
-    },
-  ]}
-/>
+                <Animated.View
+                    pointerEvents="none"
+                    style={[
+                        StyleSheet.absoluteFillObject,
+                        {
+                            backgroundColor: colors.primary_40,
+                            opacity: bgOpacity,
+                        },
+                    ]}
+                />
 
 
                 <View
@@ -117,7 +117,7 @@ const CWHeader = ({
                                     text={title}
                                     appearance={CWTypography.BODY_L_BOLD}
                                     style={[styles.title, { flexShrink: 1 }]}
-                                    />
+                                />
                             )
                         )}
                     </View>
@@ -151,13 +151,13 @@ const styles = StyleSheet.create({
         right: 0,
         zIndex: 100,
         backgroundColor: 'transparent',
-      },
-          container: {
+    },
+    container: {
         height: HEADER_HEIGHT,
         paddingHorizontal: 16,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 12
+        marginTop: 24
     },
     left: {
         width: 40,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'center',
     },
-        title: {
+    title: {
         color: 'rgba(255,255,255,0.95)',
     },
     avatar: {
