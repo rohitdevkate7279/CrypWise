@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import CWLoginScreen from '../views/AuthOnboarding/Login/CWLoginScreen';
+import CWLoginScreen from '../views/AuthOnboarding/Login/CWLoginScreen/CWLoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationStackData } from './CWNavGraph';
 import { AppScreens } from '../CWUtilities/CWConstants';
-import CWLoginOTPScreen from '../views/AuthOnboarding/Login/CWLoginOTPScreen';
+import CWLoginOTPScreen from '../views/AuthOnboarding/Login/CWLoginOTPScreen/CWLoginOTPScreen';
 import CWBiometric from '../views/AuthOnboarding/Login/Biometric/CWBiometric';
-import CWMpinScreen from '../views/AuthOnboarding/Login/CWMpinScreen';
-import CWConfirmMpinScreen from '../views/AuthOnboarding/Login/CWConfirmMpinScreen';
-import CWIntroScreen from '../views/AuthOnboarding/Login/CWIntroScreen';
+import CWMpinScreen from '../views/AuthOnboarding/Login/CWMpinScreen/CWMpinScreen';
+import CWConfirmMpinScreen from '../views/AuthOnboarding/Login/CWConfirmMpinScreen/CWConfirmMpinScreen';
+import CWIntroScreen from '../views/AuthOnboarding/Login/CWIntroScreen/CWIntroScreen';
 
 const AuthStack = createNativeStackNavigator<NavigationStackData>();
 

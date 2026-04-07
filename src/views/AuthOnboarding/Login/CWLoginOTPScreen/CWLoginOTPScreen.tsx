@@ -1,32 +1,20 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Animated, BackHandler, Keyboard, Pressable, StyleSheet, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import CWBlockTextField from "../../../CWComponents/CWBlockTextField/CWBlockTextField";
-import CWButton from "../../../CWComponents/CWButtons/CWButton";
-import CWText from "../../../CWComponents/CWText/CWText";
-import { CWTypography } from "../../../CWComponents/CWText/CWTextType";
-import { AppScreens } from "../../../CWUtilities/CWConstants";
-import ScreenSlot, { DeeplinkHandler } from "../../../CWUtilities/CWScreenSlot";
-import { HeaderType } from "../../../CWUtilities/CWScreenSlot.Types";
-import { NavigationStackData, navigationBeanObj, ActionType } from "../../../navigation/CWNavGraph";
+import { Animated, Pressable, StyleSheet, View } from "react-native";
+import CWBlockTextField from "../../../../CWComponents/CWBlockTextField/CWBlockTextField";
+import CWButton from "../../../../CWComponents/CWButtons/CWButton";
+import CWText from "../../../../CWComponents/CWText/CWText";
+import { CWTypography } from "../../../../CWComponents/CWText/CWTextType";
+import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import ScreenSlot, { DeeplinkHandler } from "../../../../CWUtilities/CWScreenSlot";
+import { NavigationStackData } from "../../../../navigation/CWNavGraph";
 import useLoginOTPViewModel from "./useLoginOTPViewModel";
-import { checkBiometricAvailability } from "./Biometric/CWBiometric.service";
-import { CWButtonKind } from "../../../CWComponents/CWButtons/CWButton.types";
 
-type Props = NativeStackScreenProps<
-  NavigationStackData,
-  AppScreens.LOGIN_OTP_SCREEN
->;
+type Props = NativeStackScreenProps<NavigationStackData, AppScreens.LOGIN_OTP_SCREEN>;
 
 const CWLoginOTPScreen = ({ navigation }: Props) => {
-
-  const {
-    navigationBean,
-    handleOtpFilled,
-    handleResendOTP,
-    handleContinue,
-  } = useLoginOTPViewModel(navigation)
+  const { navigationBean, handleOtpFilled, handleResendOTP, handleContinue } =
+    useLoginOTPViewModel(navigation);
 
   const renderContent = useCallback(
     (scrollY: Animated.Value) => {
@@ -73,23 +61,22 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
                   style={styles.resendText}
                 />
               </Pressable>
-
             </View>
           </View>
 
           <View style={styles.buttonContainer}>
-            <CWButton title="Continue" onPress={() =>handleContinue()}/>
+            <CWButton title="Continue" onPress={() => handleContinue()} />
           </View>
         </View>
       );
     },
-    [handleOtpFilled]
+    [handleContinue, handleOtpFilled]
   );
 
   return (
     <DeeplinkHandler navigationBean={navigationBean} navigation={navigation}>
       {(bean) => (
-        <ScreenSlot navigationBean={bean} navigation={navigation} showBack >
+        <ScreenSlot navigationBean={bean} navigation={navigation} showBack>
           {(authState, scrollY) => renderContent(scrollY)}
         </ScreenSlot>
       )}

@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AppScreens } from '../CWUtilities/CWConstants';
 import CWAuthStackNavigator from './AuthStackNavigator';
 import CWMainStackNavigator from './MainStackNavigator';
-import CWSplashScreen from '../views/AuthOnboarding/Login/CWSPlashScree';
+import CWSplashScreen from '../views/AuthOnboarding/Login/CWSplashScreen/CWSplashScreen';
 
 const Stack = createNativeStackNavigator<NavigationStackData>();
 
