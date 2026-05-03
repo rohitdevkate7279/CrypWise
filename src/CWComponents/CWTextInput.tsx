@@ -11,7 +11,13 @@ import { IconSize } from './CWIcons/CWIcon.types'
 import CWText from './CWText/CWText'
 import { CWTypography } from './CWText/CWTextType'
 import { IconKey } from '../CWUtilities/IconUtility'
+import { KeyboardTypeOptions } from "react-native";
 
+export enum CWTextInputState {
+  NORMAL = "normal",
+  ERROR = "error",
+  SUCCESS = "success"
+}
 export type CWTextInputProps = {
   value?: string
   placeholder?: string
@@ -24,10 +30,12 @@ export type CWTextInputProps = {
   onsuffixClick?: () => void
 
   secureTextEntry?: boolean
-  keyboardType?: any
+  keyboardType?: KeyboardTypeOptions
   editable?: boolean
   autoFocus?: boolean
+  state?: CWTextInputState.NORMAL | CWTextInputState.ERROR | CWTextInputState.SUCCESS
   errorText?: string
+  maxLength?:number
 }
 
 const CWTextInput = ({
@@ -42,7 +50,9 @@ const CWTextInput = ({
   keyboardType="default",
   editable = true,
   errorText,
-  autoFocus = false
+  autoFocus = false,
+  maxLength,
+  state = CWTextInputState.NORMAL
 }: CWTextInputProps) => {
   const colors = useColors()
 
@@ -88,6 +98,7 @@ const CWTextInput = ({
           spellCheck={false}
           textContentType="none"
           autoCapitalize="none"  
+          maxLength={maxLength}
           />
 
         {/* SUFFIX ICON */}
@@ -99,12 +110,14 @@ const CWTextInput = ({
       </View>
 
       {/* ERROR */}
-      {errorText && (
+      {state === CWTextInputState.ERROR && errorText && (<View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>
+        <CWIcon ic={"IcErrorColored"} size={IconSize.SMALL} />
         <CWText
           text={errorText}
           appearance={CWTypography.BODY_XS}
-          style={{ color: 'red', marginTop: 4 }}
+          style={{ color: 'red' }}
         />
+        </View>
       )}
     </View>
   )

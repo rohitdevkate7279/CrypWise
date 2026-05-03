@@ -13,7 +13,7 @@ import CWButton from "../../../../CWComponents/CWButtons/CWButton";
 import { CWButtonSize, CWButtonKind } from "../../../../CWComponents/CWButtons/CWButton.types";
 import CWText from "../../../../CWComponents/CWText/CWText";
 import { CWTypography } from "../../../../CWComponents/CWText/CWTextType";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import { NavigationStackData } from "../../../../navigation/CWNavGraph";
 import { useColors } from "../../../../theme/CWCustomTokenProvider";
 import useIntroViewModel, { INTRO_DATA } from "./useIntroViewModel";

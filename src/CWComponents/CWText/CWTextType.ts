@@ -30,7 +30,7 @@ export enum CWTypography {
 }
 
 export interface CWTextProps {
-  text?: string;
+  text: string;
   appearance?: CWTypography;
   color?: CWColor;
   style?: StyleProp<TextStyle> | undefined;

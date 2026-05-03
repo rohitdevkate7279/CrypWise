@@ -74,17 +74,13 @@ function CWToast({
         let timeoutId: ReturnType<typeof setTimeout>;
         if (isVisible) {
             timeoutId = setTimeout(() => {
-                if (onDismiss) {
-                    onDismiss();
-                }
+                onDismiss?.();
             }, getDurationValue(duration));
         }
         return () => {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
+            if (timeoutId) clearTimeout(timeoutId);
         };
-    }, [isVisible, duration]);
+    }, [isVisible, duration, onDismiss]); // ✅ ADD THIS
 
     const getToastPrefix = (
         toastType: ToastType,

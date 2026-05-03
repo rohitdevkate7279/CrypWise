@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import { NavigationStackData, navigateTo, ActionType } from "../../../../navigation/CWNavGraph";
 
 export interface IntroItem {

@@ -7,6 +7,8 @@ const useBiometricViewModel = () => {
     const theme = useTheme()
     async function handleBiometricAuth() {
         const success = await authenticateBiometric();
+        console.error(success);
+        
         if (success) {
             setBiometricSuccess(true)
             // Navigate to dashboard

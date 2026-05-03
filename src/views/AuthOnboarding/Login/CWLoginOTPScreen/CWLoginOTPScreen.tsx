@@ -5,7 +5,7 @@ import CWBlockTextField from "../../../../CWComponents/CWBlockTextField/CWBlockT
 import CWButton from "../../../../CWComponents/CWButtons/CWButton";
 import CWText from "../../../../CWComponents/CWText/CWText";
 import { CWTypography } from "../../../../CWComponents/CWText/CWTextType";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import ScreenSlot, { DeeplinkHandler } from "../../../../CWUtilities/CWScreenSlot";
 import { NavigationStackData } from "../../../../navigation/CWNavGraph";
 import useLoginOTPViewModel from "./useLoginOTPViewModel";

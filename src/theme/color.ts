@@ -36,6 +36,8 @@ export const useColor = (token: CWColor) => {
       return theme.colors.grey_40;
     case "grey_20":
       return theme.colors.grey_20;
+    case "primary_link":
+      return theme.colors.primary_link;
     case "feedback_error_50":
       return theme.colors.feedback_error
     case "black":

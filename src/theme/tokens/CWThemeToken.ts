@@ -13,6 +13,7 @@ export type ColorScale = {
   grey_60: string,
   grey_40: string,
   grey_20: string
+  link: string
 }
 
 // ---------- MODES ----------
@@ -51,7 +52,8 @@ const themeTokens: ThemeTokensType = {
             grey_80: "#000000A6",
             grey_60: "#B5B5B5",
             grey_40: "#E0E0E0",
-            grey_20: "#F5F5F5",            
+            grey_20: "#F5F5F5", 
+            link : "#0070E0"           
         },
 
         dark: {
@@ -70,7 +72,7 @@ const themeTokens: ThemeTokensType = {
             grey_60: "#A1A1A1",
             grey_40: "#5A5A5A",
             grey_20: "#2B2B2B",
-      
+            link : "#0070E0"           
         },
     }
 }

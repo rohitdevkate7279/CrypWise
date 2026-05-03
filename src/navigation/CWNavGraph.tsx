@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { AppScreens } from "../CWUtilities/CWConstants";
+import { AppScreens } from "./CWNavigationConstants";
 import { HeaderType } from "../CWUtilities/CWScreenSlot.Types";
 import { CWSharedViewModel } from "../CWUtilities/CWSharedViewModel";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -12,7 +12,8 @@ export let navGraph = new Map<string, string>([
   [AppScreens.SPLASHSCREEN, AppScreens.SPLASHSCREEN],
   [AppScreens.BIOMETRIC_SCREEN, AppScreens.AUTHSTACK],
   [AppScreens.MPIN_SCREEN,AppScreens.AUTHSTACK],
-  [AppScreens.CONFIRM_MPIN_SCREEN,AppScreens.AUTHSTACK]
+  [AppScreens.CONFIRM_MPIN_SCREEN,AppScreens.AUTHSTACK],
+  [AppScreens.SIGNUP_SCREEN, AppScreens.AUTHSTACK]
 ])
 
 export type NavigationStackData = {
@@ -25,6 +26,7 @@ export type NavigationStackData = {
   CWBiometric: NavigationBean
   CWMpinSCreen: NavigationBean
   CWConfirmMpinScreen: NavigationBean
+  CWSignupScreen: NavigationBean
 };
 
 export interface NavigationBean {

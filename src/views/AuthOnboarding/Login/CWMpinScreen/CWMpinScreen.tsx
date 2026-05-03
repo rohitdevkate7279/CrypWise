@@ -4,16 +4,18 @@ import CWBlockTextField from "../../../../CWComponents/CWBlockTextField/CWBlockT
 import CWButton from "../../../../CWComponents/CWButtons/CWButton";
 import CWText from "../../../../CWComponents/CWText/CWText";
 import { CWTypography } from "../../../../CWComponents/CWText/CWTextType";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import ScreenSlot, { DeeplinkHandler } from "../../../../CWUtilities/CWScreenSlot";
 import { NavigationStackData } from "../../../../navigation/CWNavGraph";
 import LottieView from "lottie-react-native";
 import useMpinViewModel from "./useMpinViewModel";
+import { CWButtonState } from "../../../../CWComponents/CWButtons/CWButton.types";
 
 type Props = NativeStackScreenProps<NavigationStackData, AppScreens.MPIN_SCREEN>;
 
-const CWMpinScreen = ({ navigation }: Props) => {
-  const { navigationBean, handleMpinFilled, handleContinue } = useMpinViewModel(navigation);
+const CWMpinScreen = ({ navigation, route }: Props) => {
+  
+  const { navigationBean, handleMpinFilled, handleContinue, isLoading} = useMpinViewModel(navigation,route);
 
   const renderContent = (scrollY: Animated.Value) => {
     return (
@@ -37,7 +39,7 @@ const CWMpinScreen = ({ navigation }: Props) => {
               autoOtp={"true"}
               placeholder="0"
               inputContainer={styles.otpInput}
-              onFilled={handleMpinFilled}
+              onFilled={(mpin)=>handleMpinFilled(mpin)}
               secureTextEntry
             />
             <CWText
@@ -48,7 +50,7 @@ const CWMpinScreen = ({ navigation }: Props) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <CWButton title="Continue" onPress={handleContinue} />
+            <CWButton title="Continue" onPress={handleContinue} state={isLoading ? CWButtonState.LOADING : CWButtonState.NORMAL}/>
           </View>
         </View>
       </View>
@@ -58,7 +60,7 @@ const CWMpinScreen = ({ navigation }: Props) => {
   return (
     <DeeplinkHandler navigationBean={navigationBean} navigation={navigation}>
       {(bean) => (
-        <ScreenSlot navigationBean={bean} navigation={navigation} disableBack showBack={false}>
+        <ScreenSlot navigationBean={bean} navigation={navigation} showBack={true}>
           {(authState, scrollY) => {
             return renderContent(scrollY);
           }}

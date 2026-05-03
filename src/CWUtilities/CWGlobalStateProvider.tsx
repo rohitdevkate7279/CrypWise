@@ -11,8 +11,6 @@ interface GlobalState {
   setToastTypeData: Dispatch<SetStateAction<ToastTypeData | undefined>>;
   failureRetryToast: ToastTypeData | undefined;
   setFailureRetryToast: Dispatch<SetStateAction<ToastTypeData | undefined>>;
-  exitInvest: boolean,
-  setExitInvest: Dispatch<SetStateAction<boolean>>;
 }
 
 // Create a context with a defaultValue
@@ -23,7 +21,6 @@ export const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
   const [userAuthenticationStatus, setUserAuthenticationStatus] = useState<AuthState>(CWSharedViewModel.Instance.userAuthenticationStatus);
   const [toastTypeData, setToastTypeData] = useState<ToastTypeData | undefined>(undefined);
   const [failureRetryToast, setFailureRetryToast] = useState<ToastTypeData | undefined>(undefined);
-  const [exitInvest, setExitInvest] = useState(false)
 
 
 
@@ -35,7 +32,6 @@ export const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
     setToastTypeData,
     failureRetryToast,
     setFailureRetryToast,
-    exitInvest, setExitInvest,
   };
 
   return (

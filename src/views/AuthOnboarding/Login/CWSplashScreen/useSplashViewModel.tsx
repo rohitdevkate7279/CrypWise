@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 
 const useSplashViewModel = (navigation: NativeStackNavigationProp<any>) => {
   const handleAnimationFinish = () => {

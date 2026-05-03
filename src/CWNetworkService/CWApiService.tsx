@@ -5,6 +5,9 @@ import { EncryptionInterceptor, DecryptionInterceptor } from "./CWAPIHelper";
 import { ApiResponse } from "./CWAPIModel";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export enum APIRESPONSE {
+    SUCCESS = "200"
+}
 /**
  * =========================
  * CONFIG

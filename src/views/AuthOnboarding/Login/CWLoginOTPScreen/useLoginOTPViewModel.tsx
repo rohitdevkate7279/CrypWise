@@ -3,7 +3,7 @@ import { ActionType, navigateTo, navigationBeanObj } from "../../../../navigatio
 import { useMemo, useCallback } from "react";
 import { Keyboard } from "react-native";
 import { HeaderType } from "../../../../CWUtilities/CWScreenSlot.Types";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 
 const useLoginOTPViewModel = (navigation: NativeStackNavigationProp<any>) => {
   const navigationBean = useMemo(

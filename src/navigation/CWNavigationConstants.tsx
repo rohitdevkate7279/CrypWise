@@ -4,6 +4,7 @@ export enum AppScreens {
     MAINSTACK = "CWMainStack",
     AUTHSTACK = "CWAuthStack",
     LOGIN_SCREEN = "CWLoginScreen",
+    SIGNUP_SCREEN = "CWSignupScreen",
     ENTER_MPIN = "CWEnterMpin",
     COMMON_WEB_VIEW = "COMMON_WEB_VIEW",
     LOGIN_OTP_SCREEN = "CWLoginOTPScreen",

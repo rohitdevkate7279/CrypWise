@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationStackData } from './CWNavGraph';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AppScreens } from '../CWUtilities/CWConstants';
+import { AppScreens } from './CWNavigationConstants';
 import CWAuthStackNavigator from './AuthStackNavigator';
 import CWMainStackNavigator from './MainStackNavigator';
 import CWSplashScreen from '../views/AuthOnboarding/Login/CWSplashScreen/CWSplashScreen';

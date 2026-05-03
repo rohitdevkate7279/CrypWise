@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import LottieView from "lottie-react-native";
 import { View, StyleSheet } from "react-native";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import { useColors } from "../../../../theme/CWCustomTokenProvider";
 import useSplashViewModel from "./useSplashViewModel";
 

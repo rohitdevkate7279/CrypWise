@@ -3,14 +3,15 @@ import LottieView from "lottie-react-native";
 import { Animated, Keyboard, Modal, StyleSheet, View } from "react-native";
 import CWBlockTextField from "../../../../CWComponents/CWBlockTextField/CWBlockTextField";
 import CWButton from "../../../../CWComponents/CWButtons/CWButton";
-import CWText from "../../../../CWComponents/CWText/CWText";
 import { CWTypography } from "../../../../CWComponents/CWText/CWTextType";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import ScreenSlot, { DeeplinkHandler } from "../../../../CWUtilities/CWScreenSlot";
 import { HeaderType } from "../../../../CWUtilities/CWScreenSlot.Types";
 import { NavigationStackData, navigationBeanObj, ActionType } from "../../../../navigation/CWNavGraph";
 import { CWButtonState } from "../../../../CWComponents/CWButtons/CWButton.types";
 import useConfirmMpinViewModel from "./useConfirmMpinViewModel";
+import CWText from "../../../../CWComponents/CWText/CWText";
+import { FeedbackState } from "../../../../CWUtilities/Feedback";
 
 type Props = NativeStackScreenProps<
   NavigationStackData,
@@ -21,9 +22,10 @@ type PopupProps = {
   visible: boolean;
 };
 
-const CWConfirmMpinScreen = ({ navigation }: Props) => {
-  const { confirmPin, showMpinSuccessPopup, handleConfirmMpin } =
-    useConfirmMpinViewModel(navigation);
+const CWConfirmMpinScreen = ({ navigation, route }: Props) => {
+
+  const { confirmPin, showAccSuccessPopup, handleConfirmMpin, fromSignupScreen, isLoading, mpinError } =
+    useConfirmMpinViewModel(navigation, route);    
 
   const renderContent = (scrollY: Animated.Value) => {
     return (
@@ -31,7 +33,7 @@ const CWConfirmMpinScreen = ({ navigation }: Props) => {
         <View style={styles.otpContainer}>
           <View style={{ gap: 28 }}>
             <CWText
-              text="Confirm your MPIN to protect your digital assets."
+              text={fromSignupScreen ? "Verify your MPIN to securely complete your Crypwise account setup." : "Confirm your MPIN to protect your digital assets."}
               appearance={CWTypography.BODY_L_BOLD}
             />
 
@@ -42,27 +44,29 @@ const CWConfirmMpinScreen = ({ navigation }: Props) => {
               autoOtp={"true"}
               placeholder="0"
               inputContainer={styles.otpInput}
-              onFilled={() => {
+              onFilled={(mpin) => {
                 Keyboard.dismiss();
-                handleConfirmMpin();
+                handleConfirmMpin(mpin);
               }}
+              state={mpinError ? FeedbackState.ERROR : FeedbackState.CLEAR}
+              stateMessage="Mpin not match"
             />
           </View>
 
           <View style={styles.buttonContainer}>
             <CWButton
               title="Continue"
-              state={!confirmPin ? CWButtonState.NORMAL : CWButtonState.LOADING}
-              onPress={() => {}}
+              state = {isLoading ? CWButtonState.LOADING : confirmPin? CWButtonState.NORMAL : CWButtonState.DISABLED}
+              onPress={() => { }}
             />
           </View>
         </View>
-        {showMpinSuccessPopup && <MPINSuccessPopup visible={showMpinSuccessPopup} />}
+        {showAccSuccessPopup && <AccountSuccessPopup visible={showAccSuccessPopup} />}
       </View>
     );
   };
 
-  const MPINSuccessPopup = ({ visible }: PopupProps) => {
+  const AccountSuccessPopup = ({ visible }: PopupProps) => {
     return (
       <Modal transparent visible={visible} animationType="fade">
         <View style={styles.overlay}>
@@ -75,20 +79,13 @@ const CWConfirmMpinScreen = ({ navigation }: Props) => {
             />
 
             <CWText
-              text="Your MPIN has been saved"
+              text="Your Crypwise account is ready to go."
               appearance={CWTypography.HEADING_S}
               textAlign="center"
               color={"black"}
               style={{ marginTop: -16 }}
             />
 
-            <CWText
-              text="You can change your MPIN in Profile > Change MPIN"
-              appearance={CWTypography.BODY_S}
-              textAlign="center"
-              color={"primary_70"}
-              style={{ marginTop: 4 }}
-            />
           </View>
         </View>
       </Modal>
@@ -108,7 +105,7 @@ const CWConfirmMpinScreen = ({ navigation }: Props) => {
       navigation={navigation}
     >
       {(bean) => (
-        <ScreenSlot navigationBean={bean} navigation={navigation}>
+        <ScreenSlot navigationBean={bean} navigation={navigation} disableBack showBack={false}>
           {(authState, scrollY) => {
             return renderContent(scrollY);
           }}

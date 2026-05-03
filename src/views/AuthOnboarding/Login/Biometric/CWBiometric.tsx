@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { AppScreens } from "../../../../CWUtilities/CWConstants";
+import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import { ActionType, navigationBeanObj, NavigationStackData } from "../../../../navigation/CWNavGraph";
 import ScreenSlot, { DeeplinkHandler } from "../../../../CWUtilities/CWScreenSlot";
 import { HeaderType } from "../../../../CWUtilities/CWScreenSlot.Types";

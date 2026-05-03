@@ -6,8 +6,7 @@ import { SchematicState, Duration } from "../CWComponents/CWToast/CWToast.Types"
 import { AuthState } from "./CWAuthTypes";
 import CWLoader from "../CWComponents/CWLoader/CWLoader";
 import { DeeplinkProps, HeaderType, KeyboardProps, ScreenSlotProps } from "./CWScreenSlot.Types";
-import { navigateTo, ActionType } from "../navigation/CWNavGraph";
-import { AppScreens } from "./CWConstants";
+import { AppScreens } from "../navigation/CWNavigationConstants";
 import { CWSharedViewModel } from "./CWSharedViewModel";
 import CWHeader from "../CWComponents/CWHeader/CWHeader";
 import CWToast from "../CWComponents/CWToast/CWToast";
@@ -102,8 +101,6 @@ function ScreenSlot(props: ScreenSlotProps) {
     setToastTypeData,
     failureRetryToast,
     setFailureRetryToast,
-    exitInvest,
-    setExitInvest
   } = useGlobalState();
 
   const navigation = props?.navigation;
@@ -206,9 +203,7 @@ function ScreenSlot(props: ScreenSlotProps) {
 
         if (props.navigationBean.destination === AppScreens.MAINSTACK) {
           if (BackHandleUtility.Instance.callBackPress != undefined) {
-            setExitInvest(true)
             setTimeout(() => {
-              setExitInvest(false)
               BackHandleUtility.Instance.callBackPress()
 
             }, 2000)
@@ -226,9 +221,7 @@ function ScreenSlot(props: ScreenSlotProps) {
 
       console.log("in exit")
       if (BackHandleUtility.Instance.callBackPress != undefined) {
-        setExitInvest(true)
         setTimeout(() => {
-          setExitInvest(false)
           BackHandleUtility.Instance.callBackPress()
         }, 2000)
       }
@@ -245,13 +238,7 @@ function ScreenSlot(props: ScreenSlotProps) {
     disableBack.current = props.disableBack;
   }, [props.disableBack]);
 
-  useEffect(() => {
-    if (exitInvest) {
-      // moveKeyboard(0)
-      // Platform.OS === 'ios' ? shouldRegisterIQKeyboardJFS(true) : jfsImePaddingFlagAndroid(true);
-      // BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }
-  }, [exitInvest])
+  
 
 
   useEffect(() => {

@@ -20,6 +20,7 @@ export type ColorToken = {
   grey_20: string,
   heading: string
   primary_inverse: string
+  primary_link:string
   primary_background: string
   feedback_error: string
   feedback_success: string
@@ -87,6 +88,7 @@ export const CustomTokenProvider: React.FC<ProviderProps> = ({
     white: globalTokens[mode].white,
     black: globalTokens[mode].black,
     transparent: globalTokens[mode].transparent,
+    primary_link :themeTokens[primary][mode]["link"]
   }
 
   const gradients: GradientToken = {
