@@ -9,12 +9,15 @@ import { AppScreens } from "../../../../navigation/CWNavigationConstants";
 import ScreenSlot, { DeeplinkHandler } from "../../../../CWUtilities/CWScreenSlot";
 import { NavigationStackData } from "../../../../navigation/CWNavGraph";
 import useLoginOTPViewModel from "./useLoginOTPViewModel";
+import { CWButtonState } from "../../../../CWComponents/CWButtons/CWButton.types";
+import { CWTextInputState } from "../../../../CWComponents/CWTextInput";
+import { FeedbackState } from "../../../../CWUtilities/Feedback";
 
 type Props = NativeStackScreenProps<NavigationStackData, AppScreens.LOGIN_OTP_SCREEN>;
 
-const CWLoginOTPScreen = ({ navigation }: Props) => {
-  const { navigationBean, handleOtpFilled, handleResendOTP, handleContinue } =
-    useLoginOTPViewModel(navigation);
+const CWLoginOTPScreen = ({ navigation, route }: Props) => {
+  const { navigationBean, handleOtpFilled, handleResendOTP, handleContinue,isLoading, otp, otpError, otpSuccess, setOtp, setOtpError, setOtpSuccess } =
+    useLoginOTPViewModel(navigation,route);
 
   const renderContent = useCallback(
     (scrollY: Animated.Value) => {
@@ -22,7 +25,7 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
         <View style={styles.container}>
           <View style={styles.topSection}>
             <CWText
-              text="Enter 4-digit Code"
+              text="Enter 6-digit Code"
               textAlign="center"
               appearance={CWTypography.HEADING_S}
               color="primary_inverse"
@@ -36,7 +39,7 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
 
             <View style={styles.otpContainer}>
               <CWBlockTextField
-                numberOfDigits={4}
+                numberOfDigits={6}
                 focusStickBlinkingDuration={500}
                 gap={12}
                 autoOtp={"true"}
@@ -44,6 +47,16 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
                 inputContainer={styles.otpInput}
                 onFilled={handleOtpFilled}
                 stateMessage="Incorrect OTP"
+                onTextChange={(text) => {
+                  setOtp(text);
+                  if (otpError) {
+                    setOtpError(false);
+                  }
+                  if (otpSuccess) {
+                    setOtpSuccess(false);
+                  }
+                }}
+                state={otpError? FeedbackState.ERROR : otpSuccess ? FeedbackState.SUCCESS :FeedbackState.CLEAR}
               />
 
               <CWText
@@ -65,7 +78,7 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <CWButton title="Continue" onPress={() => handleContinue()} />
+            <CWButton title="Continue" onPress={() => handleContinue()} state={isLoading? CWButtonState.LOADING : otp.length === 6 ? CWButtonState.NORMAL : CWButtonState.DISABLED }/>
           </View>
         </View>
       );
@@ -76,7 +89,7 @@ const CWLoginOTPScreen = ({ navigation }: Props) => {
   return (
     <DeeplinkHandler navigationBean={navigationBean} navigation={navigation}>
       {(bean) => (
-        <ScreenSlot navigationBean={bean} navigation={navigation} showBack>
+        <ScreenSlot navigationBean={bean} navigation={navigation} disableBack>
           {(authState, scrollY) => renderContent(scrollY)}
         </ScreenSlot>
       )}

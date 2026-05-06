@@ -39,6 +39,7 @@ export default function CWSignupScreenViewModel(navigation: NativeStackNavigatio
     };
 
     const validate = () => {
+        setIsLoading(true)
         let valid = true;
         let newErrors: any = {};
 
@@ -61,13 +62,12 @@ export default function CWSignupScreenViewModel(navigation: NativeStackNavigatio
             newErrors.mobile = "Enter valid mobile number";
             valid = false;
         }
-
+        setIsLoading(false)
         setErrors(newErrors);
         return valid;
     };
 
     const handleSubmit = () => {
-        setIsLoading(true)
         if (validate()) {
 
             navigateTo({

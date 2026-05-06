@@ -1,10 +1,10 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useBlockInput } from "./CWUseBlockTextField";
 import Feedback, { FeedbackSize, FeedbackState } from "../../CWUtilities/Feedback";
-import { ColorValue, Dimensions, Platform, Pressable, TextInput, View, ViewStyle } from "react-native";
+import { Animated, ColorValue, Dimensions, Platform, Pressable, TextInput, Vibration, View, ViewStyle } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { styles } from "./CWBlockTextFieldStyles";
-import {CWBlockInputRef, CWBlockInputProps } from "./CWBlockTextFieldTypes";
+import { CWBlockInputRef, CWBlockInputProps } from "./CWBlockTextFieldTypes";
 import CWText from "../CWText/CWText";
 import { CWTypography } from "../CWText/CWTextType";
 import { useColors } from "../../theme/CWCustomTokenProvider";
@@ -55,6 +55,22 @@ const CWBlockTextField = React.memo(forwardRef<CWBlockInputRef, CWBlockInputProp
     } = theme;
 
     const colors = useColors();
+    const shakeAnim = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+      if (state === FeedbackState.ERROR) {
+        Vibration.vibrate(80);
+
+        Animated.sequence([
+          Animated.timing(shakeAnim, { toValue: 10, duration: 50, useNativeDriver: true }),
+          Animated.timing(shakeAnim, { toValue: -10, duration: 50, useNativeDriver: true }),
+          Animated.timing(shakeAnim, { toValue: 8, duration: 50, useNativeDriver: true }),
+          Animated.timing(shakeAnim, { toValue: -8, duration: 50, useNativeDriver: true }),
+          Animated.timing(shakeAnim, { toValue: 4, duration: 50, useNativeDriver: true }),
+          Animated.timing(shakeAnim, { toValue: 0, duration: 50, useNativeDriver: true }),
+        ]).start();
+      }
+    }, [state]);
 
     const getPinBorderColor = (state: FeedbackState): ColorValue => {
       switch (state) {
@@ -65,7 +81,7 @@ const CWBlockTextField = React.memo(forwardRef<CWBlockInputRef, CWBlockInputProp
         case FeedbackState.SUCCESS:
           return colors.feedback_success;
         default:
-          return colors.grey_80;
+          return colors.white;
       }
     };
 
@@ -99,7 +115,7 @@ const CWBlockTextField = React.memo(forwardRef<CWBlockInputRef, CWBlockInputProp
       if (onResend || clearText) {
         setTextWithRef('');
       }
-    }, [onResend, state, clearText]);
+    }, [onResend, clearText]);
 
     useEffect(() => {
       if (Platform.OS === 'android') {
@@ -155,8 +171,14 @@ const CWBlockTextField = React.memo(forwardRef<CWBlockInputRef, CWBlockInputProp
 
     return (
       <View style={{ flexDirection: 'column' }}>
-        <View
-          style={[styles.container, containerStyle]}>
+        <Animated.View
+          style={[
+            styles.container,
+            containerStyle,
+            { transform: [{ translateX: shakeAnim }] }
+          ]}
+        >
+
           <View style={[styles.inputsContainer, mainContainerStyle, inputsContainerStyle, { gap: gap }]}>
             {Array(numberOfDigits)
               .fill(0)
@@ -230,7 +252,7 @@ const CWBlockTextField = React.memo(forwardRef<CWBlockInputRef, CWBlockInputProp
             cursorColor={useColors().white}
             selectionColor={useColors().grey_80}
           />
-        </View>
+        </Animated.View>
         {state !== FeedbackState.CLEAR && (
           <View
             style={{

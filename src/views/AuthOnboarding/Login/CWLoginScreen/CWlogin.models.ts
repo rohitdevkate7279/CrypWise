@@ -4,7 +4,7 @@ export interface SendOtpRequest {
 }
 
 export interface SendOtpResponse {
-  status?: string;
+  status_code?: number;
   message?: string;
 }
 

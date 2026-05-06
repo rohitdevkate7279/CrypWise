@@ -10,8 +10,10 @@ export interface ApiRequest {
   }
 
 
-export interface ApiResponse<R> {
-    data?: string;
+  export interface ApiResponse<R> {
+    message?: string;
+    status_code?: number;
+    data?: R;
   }
   
   export interface ErrorType {

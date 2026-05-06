@@ -47,7 +47,7 @@ const useConfirmMpinViewModel = (navigation: NativeStackNavigationProp<any>, rou
 
     try {
       const response: SendSignupResponse = await signupApi(data?.email, mpin, data?.name, data?.phone);
-      if (response.status === APIRESPONSE.SUCCESS) {
+      if (response?.status_code === APIRESPONSE.SUCCESS) {
         setIsLoading(false);
         setShowAccSuccessPopup(true)
         navigateTo(
@@ -66,7 +66,7 @@ const useConfirmMpinViewModel = (navigation: NativeStackNavigationProp<any>, rou
         setIsLoading(false);
         setToastTypeData({
           isVisible: true,
-          message: response.message,
+          message: response?.message ?? "",
           semanticState: SchematicState.ERROR,
           viewStyle: { marginBottom: 105 },
         });
@@ -76,7 +76,7 @@ const useConfirmMpinViewModel = (navigation: NativeStackNavigationProp<any>, rou
       setIsLoading(false);
       setToastTypeData({
         isVisible: true,
-        message: error.message,
+        message: error?.message ?? "",
         semanticState: SchematicState.ERROR,
         duration: Duration.SHORT,
         viewStyle: { marginBottom: 105 },
@@ -92,7 +92,8 @@ const useConfirmMpinViewModel = (navigation: NativeStackNavigationProp<any>, rou
     fromSignupScreen,
     setConfirmMpin,
     isLoading,
-    mpinError
+    mpinError,
+    setMpinError
   };
 };
 

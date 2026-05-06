@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   View,
   TextInput,
   StyleSheet,
   Pressable,
+  Animated,
+  Vibration,
 } from 'react-native'
 import { useColors } from '../theme/CWCustomTokenProvider'
 import { CWIcon } from './CWIcons/CWIcon'
@@ -12,6 +14,7 @@ import CWText from './CWText/CWText'
 import { CWTypography } from './CWText/CWTextType'
 import { IconKey } from '../CWUtilities/IconUtility'
 import { KeyboardTypeOptions } from "react-native";
+import { FeedbackState } from '../CWUtilities/Feedback'
 
 export enum CWTextInputState {
   NORMAL = "normal",
@@ -56,6 +59,24 @@ const CWTextInput = ({
 }: CWTextInputProps) => {
   const colors = useColors()
 
+  const shakeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (state === CWTextInputState.ERROR) {
+      Vibration.vibrate(80);
+
+      Animated.sequence([
+        Animated.timing(shakeAnim, { toValue: 10, duration: 50, useNativeDriver: true }),
+        Animated.timing(shakeAnim, { toValue: -10, duration: 50, useNativeDriver: true }),
+        Animated.timing(shakeAnim, { toValue: 8, duration: 50, useNativeDriver: true }),
+        Animated.timing(shakeAnim, { toValue: -8, duration: 50, useNativeDriver: true }),
+        Animated.timing(shakeAnim, { toValue: 4, duration: 50, useNativeDriver: true }),
+        Animated.timing(shakeAnim, { toValue: 0, duration: 50, useNativeDriver: true }),
+      ]).start();
+    }
+  }, [state]);
+
+
   return (
     <View style={{ marginBottom: 16 }}>
       {/* LABEL */}
@@ -68,13 +89,14 @@ const CWTextInput = ({
       )}
 
       {/* INPUT CONTAINER */}
-      <View
+      <Animated.View
         style={[
           styles.container,
           {
             backgroundColor: colors.primary_background,
             borderColor: errorText ? colors.feedback_error : colors.white,
           },
+          { transform: [{ translateX: shakeAnim }] }
         ]}
       >
         {/* LEFT ICON */}
@@ -107,7 +129,7 @@ const CWTextInput = ({
             <CWIcon ic={suffixIcon} size={IconSize.MEDIUM} />
           </Pressable>
         )}
-      </View>
+      </Animated.View>
 
       {/* ERROR */}
       {state === CWTextInputState.ERROR && errorText && (<View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4 }}>

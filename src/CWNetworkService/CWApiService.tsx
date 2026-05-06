@@ -6,7 +6,7 @@ import { ApiResponse } from "./CWAPIModel";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export enum APIRESPONSE {
-    SUCCESS = "200"
+    SUCCESS = 200
 }
 /**
  * =========================
@@ -25,38 +25,49 @@ const SECRET_KEY = "1234567890";
 
 // BEFORE request is sent
 axios.interceptors.request.use(
-    async config => {
-        // const token = await AsyncStorage.getItem("ACCESS_TOKEN");
-
-        // if (token) {
-        //     config.headers.Authorization = `Bearer ${token}`;
-        // }
-        return config;
-    },
-    error => Promise.reject(error)
+  config => {
+    if (__DEV__) {
+      console.log("REQUEST:", {
+        url: config.url,
+        method: config.method,
+        data: config.data,
+        headers: config.headers,
+      });
+    }
+    return config;
+  },
+  error => {
+    if (__DEV__) {
+      console.log("REQUEST ERROR:", error);
+    }
+    return Promise.reject(error);
+  }
 );
 
 // AFTER response is received
 axios.interceptors.response.use(
     response => {
-        console.log("✅ API SUCCESS from interceptors:", response.config.url);
-        return response;
+      if (__DEV__) {
+        console.log("RESPONSE:", {
+          url: response.config.url,
+          status: response.status,
+          data: response.data,
+        });
+      }
+      return response;
     },
-    async error => {
-        console.log("❌ API ERROR from interceptors:", error?.response?.status);
-
-        if (error?.response?.status === 401) {
-            console.log("⚠️ Token expired / Unauthorized");
-
-            // optional:
-            // await AsyncStorage.removeItem("ACCESS_TOKEN");
-            // navigate to login
-        }
-
-        return Promise.reject(error);
+    error => {
+      if (__DEV__) {
+        console.log(" RESPONSE ERROR:", {
+          url: error?.config?.url,
+          status: error?.response?.status,
+          data: error?.response?.data,
+        });
+      }
+  
+      return Promise.reject(error);
     }
-);
-
+  );
 /**
  * =========================
  * AXIOS CALL (kept here)

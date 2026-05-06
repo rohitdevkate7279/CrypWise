@@ -48,12 +48,12 @@ const useLoginViewModel = (navigation: NativeStackNavigationProp<any>) => {
     try {
       const response: SendOtpResponse = await loginApi(email, mpin);
       setIsLoading(false);
-      if (response.status === APIRESPONSE.SUCCESS) {
+      if (response?.status_code === APIRESPONSE.SUCCESS) {
         navigateTo(
           {
             actionType: ActionType.OPEN_NATIVE,
             destination: AppScreens.LOGIN_OTP_SCREEN,
-            params: {},
+            params: {email:email},
           },
           navigation
         );
@@ -67,10 +67,10 @@ const useLoginViewModel = (navigation: NativeStackNavigationProp<any>) => {
           semanticState: SchematicState.ERROR,
           viewStyle: { marginBottom: 105 },
         });
+        setTimeout(() => {
+          onClickOfSignUp();
+        }, 4000);
       }
-      setTimeout(() => {
-        onClickOfSignUp();
-      }, 4000);
     } catch (e: unknown) {
       setIsLoading(false);
       let message = thrownErrorMessage(e);
@@ -82,10 +82,10 @@ const useLoginViewModel = (navigation: NativeStackNavigationProp<any>) => {
         duration: Duration.SHORT,
         viewStyle: { marginBottom: 105 },
       });
+      setTimeout(() => {
+        onClickOfSignUp();
+      }, 4000);
     }
-    setTimeout(() => {
-      onClickOfSignUp();
-    }, 4000);
   }, [navigation, email, mpin, setToastTypeData]);
 
   const onClickOfSignUp = () => {

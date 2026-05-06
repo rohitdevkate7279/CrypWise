@@ -24,8 +24,8 @@ type PopupProps = {
 
 const CWConfirmMpinScreen = ({ navigation, route }: Props) => {
 
-  const { confirmPin, showAccSuccessPopup, handleConfirmMpin, fromSignupScreen, isLoading, mpinError } =
-    useConfirmMpinViewModel(navigation, route);    
+  const { confirmPin, showAccSuccessPopup, handleConfirmMpin, fromSignupScreen, isLoading, mpinError, setMpinError } =
+    useConfirmMpinViewModel(navigation, route);
 
   const renderContent = (scrollY: Animated.Value) => {
     return (
@@ -44,6 +44,11 @@ const CWConfirmMpinScreen = ({ navigation, route }: Props) => {
               autoOtp={"true"}
               placeholder="0"
               inputContainer={styles.otpInput}
+              onTextChange={(text) => {
+                if (mpinError && text.length < 4) {
+                  setMpinError(false);
+                }
+              }}
               onFilled={(mpin) => {
                 Keyboard.dismiss();
                 handleConfirmMpin(mpin);
@@ -56,7 +61,7 @@ const CWConfirmMpinScreen = ({ navigation, route }: Props) => {
           <View style={styles.buttonContainer}>
             <CWButton
               title="Continue"
-              state = {isLoading ? CWButtonState.LOADING : confirmPin? CWButtonState.NORMAL : CWButtonState.DISABLED}
+              state={isLoading ? CWButtonState.LOADING : confirmPin ? CWButtonState.NORMAL : CWButtonState.DISABLED}
               onPress={() => { }}
             />
           </View>
